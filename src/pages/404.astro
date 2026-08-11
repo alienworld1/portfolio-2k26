@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  description="The requested page could not be found."
+  noIndex
+  title="Page not found"
+>
+  <section class="mx-auto max-w-(--compact-prose-max) px-(--gutter) py-16">
+    <p class="font-interface text-primary mb-2 text-sm font-semibold">404</p>
+    <h1
+      class="font-interface m-0 text-[length:var(--font-size-headline-lg)] leading-(--line-height-headline-lg)"
+    >
+      We couldn’t find that page
+    </h1>
+    <p class="text-on-surface-variant mt-4">
+      The address may have changed, or the page may no longer exist.
+    </p>
+    <a
+      class="border-primary bg-primary text-on-primary visited:text-on-primary hover:bg-primary-hover font-interface mt-6 inline-flex min-h-11 items-center border px-4 text-sm font-semibold no-underline"
+      href="/"
+    >
+      Return to overview
+    </a>
+  </section>
+</BaseLayout>

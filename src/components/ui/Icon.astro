@@ -1,0 +1,50 @@
+---
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import type { IconType } from 'react-icons';
+import {
+  LuBriefcaseBusiness,
+  LuBuilding2,
+  LuExternalLink,
+  LuFileText,
+  LuFlaskConical,
+  LuHouse,
+  LuMenu,
+  LuTrophy,
+  LuUserRound,
+} from 'react-icons/lu';
+
+const icons = {
+  briefcase: LuBriefcaseBusiness,
+  building: LuBuilding2,
+  external: LuExternalLink,
+  file: LuFileText,
+  lab: LuFlaskConical,
+  home: LuHouse,
+  menu: LuMenu,
+  trophy: LuTrophy,
+  user: LuUserRound,
+} satisfies Record<string, IconType>;
+
+export type IconName = keyof typeof icons;
+
+interface Props {
+  name: IconName;
+  size?: number;
+  class?: string;
+  ariaLabel?: string;
+}
+
+const { name, size = 18, class: className, ariaLabel } = Astro.props;
+const iconMarkup = renderToStaticMarkup(
+  createElement(icons[name], {
+    'aria-hidden': ariaLabel ? undefined : true,
+    'aria-label': ariaLabel,
+    className,
+    focusable: false,
+    size,
+  }),
+);
+---
+
+<Fragment set:html={iconMarkup} />

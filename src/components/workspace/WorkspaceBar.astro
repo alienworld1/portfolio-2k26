@@ -1,0 +1,23 @@
+---
+import PrimaryNav from '../navigation/PrimaryNav.astro';
+
+interface Props {
+  identity: string;
+  pathname: string;
+}
+
+const { identity, pathname } = Astro.props;
+---
+
+<header
+  class="border-outline bg-surface-container-high flex min-h-(--workspace-bar-height) items-stretch justify-between border-b"
+  data-workspace-bar
+>
+  <a
+    class="text-on-surface visited:text-on-surface font-interface flex min-h-11 items-center px-3 text-xs font-bold no-underline"
+    href="/"
+  >
+    {identity}
+  </a>
+  <PrimaryNav pathname={pathname} />
+</header>

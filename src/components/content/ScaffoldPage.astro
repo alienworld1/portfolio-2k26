@@ -1,0 +1,19 @@
+---
+import Pane from '../workspace/Pane.astro';
+import WorkspaceShell from '../workspace/WorkspaceShell.astro';
+
+interface Props {
+  title: string;
+  message: string;
+}
+
+const { title, message } = Astro.props;
+---
+
+<WorkspaceShell>
+  <Pane title={title}>
+    <p class="text-on-surface-variant m-0 max-w-(--compact-prose-max)">
+      {message}
+    </p>
+  </Pane>
+</WorkspaceShell>

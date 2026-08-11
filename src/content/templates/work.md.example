@@ -1,0 +1,26 @@
+---
+title: '[Add project title]'
+summary: '[Add a one-sentence project summary]'
+type: security-tooling
+date: 2026-01-01
+featured: false
+status: in-progress
+role: '[Describe your contribution accurately]'
+skills: []
+evidence: []
+draft: true
+technologies: []
+securityTopics: []
+---
+
+## Context
+
+[Explain why the project exists and who used it.]
+
+## Decisions and trade-offs
+
+[Document the important technical decisions.]
+
+## Limitations
+
+[State the current limitations honestly.]

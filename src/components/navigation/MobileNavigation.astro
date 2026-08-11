@@ -1,0 +1,74 @@
+---
+import {
+  mobilePrimaryNavigation,
+  mobileSecondaryNavigation,
+} from '../../data/navigation';
+import { isCurrentPath } from '../../utils/paths';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  pathname: string;
+}
+
+const { pathname } = Astro.props;
+---
+
+<nav
+  aria-label="Mobile navigation"
+  class="border-outline bg-surface-container-lowest desktop:hidden fixed inset-x-0 bottom-0 z-40 border-t pb-[env(safe-area-inset-bottom)]"
+  data-print-hidden
+>
+  <ul class="grid grid-cols-5">
+    {
+      mobilePrimaryNavigation.map((item) => {
+        const current = isCurrentPath(pathname, item.href);
+
+        return (
+          <li>
+            <a
+              aria-current={current ? 'page' : undefined}
+              class:list={[
+                'font-interface flex min-h-14 items-center justify-center px-1 text-[0.6875rem] font-semibold no-underline',
+                current
+                  ? 'bg-primary text-on-primary visited:text-on-primary'
+                  : 'text-on-surface visited:text-on-surface',
+              ]}
+              href={item.href}
+            >
+              {item.label}
+            </a>
+          </li>
+        );
+      })
+    }
+    <li class="relative">
+      <details class="group">
+        <summary
+          class="font-interface flex min-h-14 cursor-pointer list-none items-center justify-center gap-1 px-1 text-[0.6875rem] font-semibold"
+        >
+          <Icon name="menu" size={16} />
+          More
+        </summary>
+        <ul
+          class="border-outline bg-surface-container-lowest absolute right-0 bottom-full min-w-48 border"
+        >
+          {
+            mobileSecondaryNavigation.map((item) => (
+              <li>
+                <a
+                  aria-current={
+                    isCurrentPath(pathname, item.href) ? 'page' : undefined
+                  }
+                  class="text-on-surface visited:text-on-surface hover:bg-primary-container font-interface flex min-h-11 items-center px-4 text-xs no-underline"
+                  href={item.href}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </details>
+    </li>
+  </ul>
+</nav>

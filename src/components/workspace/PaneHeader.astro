@@ -1,0 +1,24 @@
+---
+interface Props {
+  title: string;
+  level?: 2 | 3;
+}
+
+const { title, level = 2 } = Astro.props;
+---
+
+<header
+  class="border-outline bg-surface-container-high flex min-h-(--pane-header-height) items-center border-b px-3"
+>
+  {
+    level === 2 ? (
+      <h2 class="text-on-surface font-interface m-0 text-[length:var(--font-size-label-md)] leading-(--line-height-label) font-semibold tracking-(--letter-spacing-label) uppercase">
+        {title}
+      </h2>
+    ) : (
+      <h3 class="text-on-surface font-interface m-0 text-[length:var(--font-size-label-md)] leading-(--line-height-label) font-semibold tracking-(--letter-spacing-label) uppercase">
+        {title}
+      </h3>
+    )
+  }
+</header>

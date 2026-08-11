@@ -1,0 +1,26 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<BaseLayout description={description} title={title}>
+  <article class="mx-auto max-w-(--prose-max) px-(--gutter) py-8">
+    <header class="border-outline mb-8 border-b pb-6">
+      <h1
+        class="text-on-surface font-interface m-0 text-[length:var(--font-size-headline-lg)] leading-(--line-height-headline-lg) font-bold tracking-(--letter-spacing-headline-lg)"
+      >
+        {title}
+      </h1>
+      <p class="text-on-surface-variant mt-4 mb-0 text-lg">{description}</p>
+    </header>
+    <div class="space-y-(--prose-gap)">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>

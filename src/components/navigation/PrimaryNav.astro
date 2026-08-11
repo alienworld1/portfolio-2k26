@@ -1,0 +1,37 @@
+---
+import { primaryNavigation } from '../../data/navigation';
+import { isCurrentPath } from '../../utils/paths';
+
+interface Props {
+  pathname: string;
+}
+
+const { pathname } = Astro.props;
+---
+
+<nav aria-label="Primary navigation" class="desktop:block hidden">
+  <ul class="flex min-h-(--workspace-bar-height) items-stretch">
+    {
+      primaryNavigation.map((item) => {
+        const current = isCurrentPath(pathname, item.href);
+
+        return (
+          <li class="flex">
+            <a
+              aria-current={current ? 'page' : undefined}
+              class:list={[
+                'border-outline font-interface flex min-h-11 items-center border-l px-3 text-xs font-semibold tracking-(--letter-spacing-label) uppercase no-underline transition-colors',
+                current
+                  ? 'bg-primary text-on-primary visited:text-on-primary'
+                  : 'text-on-surface visited:text-on-surface hover:bg-primary-container',
+              ]}
+              href={item.href}
+            >
+              {item.label}
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</nav>

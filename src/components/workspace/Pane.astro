@@ -1,0 +1,17 @@
+---
+import PaneHeader from './PaneHeader.astro';
+
+interface Props {
+  title: string;
+  level?: 2 | 3;
+}
+
+const { title, level = 2 } = Astro.props;
+---
+
+<section class="bg-surface-container-lowest min-w-0" data-pane>
+  <PaneHeader level={level} title={title} />
+  <div class="p-(--pane-padding)">
+    <slot />
+  </div>
+</section>

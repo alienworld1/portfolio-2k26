@@ -1,0 +1,23 @@
+---
+title: '[Add lab title]'
+summary: '[Add a one-sentence lab summary]'
+date: 2026-01-01
+environment: '[Describe the safe lab environment]'
+topics: []
+status: planned
+draft: true
+tools: []
+references: []
+---
+
+## Objective
+
+[State the learning or investigation objective.]
+
+## Method and evidence
+
+[Describe the safe test method and evidence collected.]
+
+## Findings and limitations
+
+[Record the conclusion and its boundaries.]

@@ -1,0 +1,53 @@
+---
+import '../styles/global.css';
+import MobileNavigation from '../components/navigation/MobileNavigation.astro';
+import SkipLink from '../components/chrome/SkipLink.astro';
+import WorkspaceBar from '../components/workspace/WorkspaceBar.astro';
+import { profile } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalUrl?: URL | string;
+  imageUrl?: URL | string;
+  noIndex?: boolean;
+}
+
+const {
+  title,
+  description,
+  canonicalUrl,
+  imageUrl,
+  noIndex = false,
+} = Astro.props;
+const pageTitle = `${title} | ${profile.name}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#fcf9f2" />
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+    {imageUrl && <meta property="og:image" content={imageUrl} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>{pageTitle}</title>
+  </head>
+  <body class="desktop:pb-0 pb-[calc(3.5rem+env(safe-area-inset-bottom))]">
+    <SkipLink />
+    <WorkspaceBar identity={profile.name} pathname={Astro.url.pathname} />
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+    <MobileNavigation pathname={Astro.url.pathname} />
+  </body>
+</html>
