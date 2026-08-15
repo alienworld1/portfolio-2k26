@@ -1,6 +1,4 @@
-# Security Operations Portfolio
-
-An Astro foundation for an evidence-led cybersecurity portfolio. The current repository contains the design system, shared interface primitives, content contracts, and route scaffolding. Final page composition and portfolio content are intentionally not included yet.
+# Portfolio
 
 ## Commands
 
@@ -18,22 +16,6 @@ Use pnpm for all package and script operations.
 | `pnpm format`              | Format supported files                              |
 | `pnpm build`               | Create the static production build                  |
 | `pnpm preview`             | Preview the production build                        |
-
-## Structure
-
-```text
-src/
-├── components/       Shared Astro primitives and the server-rendered icon adapter
-├── content/          Published work and lab Markdown or MDX entries
-│   └── templates/    Copyable examples excluded from content collection loaders
-├── data/             Navigation and shared typed portfolio facts
-├── layouts/          Shared document and editorial entry layouts
-├── motion/           Reserved for page-scoped GSAP enhancements
-├── pages/            Minimal route files and content-driven detail routes
-├── styles/           Global Tailwind theme, design tokens, and resets
-├── utils/            Framework-independent helpers
-└── content.config.ts Validated work and lab collection schemas
-```
 
 ## Adding content
 
