@@ -1,0 +1,134 @@
+---
+import WorkspaceShell from './WorkspaceShell.astro';
+import WorkspaceStatus from './WorkspaceStatus.astro';
+
+interface Props {
+  label: string;
+  paneCount: number;
+}
+
+const { label, paneCount } = Astro.props;
+---
+
+<WorkspaceShell>
+  <div data-tiling-workspace data-layout="default">
+    <div class="tile-grid" data-tile-grid>
+      <slot />
+    </div>
+    <WorkspaceStatus label={label} paneCount={paneCount} />
+  </div>
+</WorkspaceShell>
+
+<script>
+  import { initializeTilingWorkspaces } from '../../motion/tiling-workspace';
+
+  const cleanup = initializeTilingWorkspaces();
+  document.addEventListener('astro:before-swap', cleanup, { once: true });
+</script>
+
+<style>
+  .tile-grid {
+    display: grid;
+    gap: var(--window-gap);
+    background: var(--color-outline);
+    isolation: isolate;
+  }
+
+  .tile-grid :global([data-pane]) {
+    min-height: 0;
+  }
+
+  [data-animating='true'] .tile-grid :global([data-pane]) {
+    will-change: transform, width, height;
+  }
+
+  .tile-grid :global([data-pane='identity']) {
+    grid-area: identity;
+  }
+
+  .tile-grid :global([data-pane='featured']) {
+    grid-area: featured;
+  }
+
+  .tile-grid :global([data-pane='focus']) {
+    grid-area: focus;
+  }
+
+  .tile-grid :global([data-pane='index']) {
+    grid-area: index;
+  }
+
+  .tile-grid :global([data-pane][data-active='true']) {
+    z-index: 1;
+    box-shadow:
+      inset 0 0 0 var(--border-strong-width) var(--color-primary),
+      var(--effect-active-glow);
+  }
+
+  @media (max-width: 47.9375rem) {
+    .tile-grid {
+      grid-template-areas:
+        'identity'
+        'featured'
+        'focus'
+        'index';
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (min-width: 48rem) and (max-width: 63.9375rem) {
+    .tile-grid {
+      grid-template-areas:
+        'identity identity'
+        'featured focus'
+        'index index';
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .tile-grid :global([data-pane-content]) {
+      overflow: auto;
+      overscroll-behavior: contain;
+      scrollbar-gutter: stable;
+    }
+
+    .tile-grid {
+      grid-template-areas:
+        'identity identity identity identity identity identity identity featured featured featured featured featured'
+        'identity identity identity identity identity identity identity focus focus focus focus focus'
+        'index index index index index index index index index index index index';
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-template-rows: minmax(15rem, 1fr) minmax(12rem, 0.8fr) auto;
+      min-height: min(43rem, calc(100vh - 8rem));
+    }
+
+    [data-layout='identity'] .tile-grid {
+      grid-template-areas:
+        'identity identity identity identity identity identity identity identity featured featured featured featured'
+        'identity identity identity identity identity identity identity identity focus focus focus focus'
+        'identity identity identity identity identity identity identity identity index index index index';
+    }
+
+    [data-layout='featured'] .tile-grid {
+      grid-template-areas:
+        'featured featured featured featured featured featured featured featured identity identity identity identity'
+        'featured featured featured featured featured featured featured featured focus focus focus focus'
+        'featured featured featured featured featured featured featured featured index index index index';
+    }
+
+    [data-layout='focus'] .tile-grid {
+      grid-template-areas:
+        'focus focus focus focus focus focus focus focus identity identity identity identity'
+        'focus focus focus focus focus focus focus focus featured featured featured featured'
+        'focus focus focus focus focus focus focus focus index index index index';
+    }
+
+    [data-layout='index'] .tile-grid {
+      grid-template-areas:
+        'index index index index index index index index identity identity identity identity'
+        'index index index index index index index index featured featured featured featured'
+        'index index index index index index index index focus focus focus focus';
+    }
+  }
+</style>

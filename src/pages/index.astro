@@ -1,14 +1,21 @@
 ---
-import ScaffoldPage from '../components/content/ScaffoldPage.astro';
+import CurrentFocusPane from '../components/overview/CurrentFocusPane.astro';
+import FeaturedBuildPane from '../components/overview/FeaturedBuildPane.astro';
+import IdentityPane from '../components/overview/IdentityPane.astro';
+import WorkspaceIndexPane from '../components/overview/WorkspaceIndexPane.astro';
+import TilingWorkspace from '../components/workspace/TilingWorkspace.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
-  description="Portfolio overview foundation awaiting final content."
+  description="A cybersecurity portfolio focused on security operations, system security, defensive analysis, and the evidence behind the work."
   title="Overview"
 >
-  <ScaffoldPage
-    message="The portfolio overview is being prepared. Work, experience, and contact details will appear here."
-    title="Overview"
-  />
+  <h1 class="sr-only">A B Aditya — Cybersecurity Analyst</h1>
+  <TilingWorkspace label="overview.workspace" paneCount={4}>
+    <IdentityPane />
+    <FeaturedBuildPane />
+    <CurrentFocusPane />
+    <WorkspaceIndexPane />
+  </TilingWorkspace>
 </BaseLayout>

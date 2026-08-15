@@ -1,0 +1,46 @@
+---
+import { currentFocus } from '../../data/overview';
+import Icon from '../ui/Icon.astro';
+import Pane from '../workspace/Pane.astro';
+---
+
+<Pane focusable paneId="focus" status="learning path" title="Current focus">
+  <div class="flex h-full flex-col justify-between gap-5">
+    <ul class="focus-grid m-0 grid list-none gap-2 p-0">
+      {
+        currentFocus.map((focus, index) => (
+          <li class="border-outline-variant flex items-start gap-3 border-t pt-2">
+            <span
+              class="text-primary font-interface text-xs"
+              aria-hidden="true"
+            >
+              [{String(index + 1).padStart(2, '0')}]
+            </span>
+            <span class="text-on-surface font-interface text-sm font-semibold">
+              {focus}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+    <a
+      class="text-link visited:text-link-visited font-interface inline-flex min-h-11 w-fit items-center gap-2 text-xs font-semibold uppercase underline underline-offset-4"
+      href="/lab/"
+    >
+      Open the lab
+      <Icon name="arrowRight" size={16} />
+    </a>
+  </div>
+</Pane>
+
+<style>
+  .focus-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @container pane (min-width: 38rem) {
+    .focus-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

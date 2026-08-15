@@ -1,0 +1,23 @@
+---
+interface Props {
+  label: string;
+  paneCount: number;
+}
+
+const { label, paneCount } = Astro.props;
+---
+
+<footer
+  class="bg-inverse-surface text-inverse-on-surface font-interface flex min-h-9 items-center justify-between gap-4 px-3 text-[0.6875rem] tracking-wide"
+  data-workspace-status
+>
+  <div class="flex min-w-0 items-center gap-3">
+    <span class="bg-primary text-on-primary px-2 py-0.5">01</span>
+    <span class="truncate">{label}</span>
+    <span class="text-outline-variant hidden sm:inline">{paneCount} panes</span>
+  </div>
+  <p aria-live="polite" class="m-0 flex shrink-0 items-center gap-2">
+    <span class="bg-success inline-block size-1.5" aria-hidden="true"></span>
+    <span data-workspace-message>ready</span>
+  </p>
+</footer>

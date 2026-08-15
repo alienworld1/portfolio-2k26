@@ -1,0 +1,47 @@
+---
+import { featuredBuild } from '../../data/overview';
+import Icon from '../ui/Icon.astro';
+import Pane from '../workspace/Pane.astro';
+---
+
+<Pane
+  focusable
+  paneId="featured"
+  status={featuredBuild.status}
+  title="Featured build"
+>
+  <div class="flex h-full flex-col justify-between gap-6">
+    <div>
+      <p
+        class="text-primary font-interface mt-0 mb-3 text-xs font-semibold tracking-(--letter-spacing-label) uppercase"
+      >
+        {featuredBuild.type}
+      </p>
+      <h3
+        class="featured-title text-on-surface font-interface m-0 text-[length:var(--font-size-headline-lg)] leading-(--line-height-headline-lg) font-bold tracking-(--letter-spacing-headline-lg)"
+      >
+        {featuredBuild.title}
+      </h3>
+      <p class="text-on-surface-variant mt-4 mb-0 max-w-(--compact-prose-max)">
+        {featuredBuild.summary}
+      </p>
+    </div>
+    <a
+      class="text-link visited:text-link-visited font-interface inline-flex min-h-11 w-fit items-center gap-2 text-xs font-semibold uppercase underline underline-offset-4"
+      href={featuredBuild.href}
+    >
+      View the work index
+      <Icon name="arrowRight" size={16} />
+    </a>
+  </div>
+</Pane>
+
+<style>
+  @container pane (max-width: 33.999rem) {
+    .featured-title {
+      font-size: var(--font-size-headline-md);
+      line-height: var(--line-height-headline-md);
+      letter-spacing: var(--letter-spacing-headline-md);
+    }
+  }
+</style>

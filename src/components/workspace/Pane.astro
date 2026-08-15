@@ -4,14 +4,44 @@ import PaneHeader from './PaneHeader.astro';
 interface Props {
   title: string;
   level?: 2 | 3;
+  paneId?: string;
+  status?: string;
+  focusable?: boolean;
+  priority?: 'primary' | 'secondary';
 }
 
-const { title, level = 2 } = Astro.props;
+const {
+  title,
+  level = 2,
+  paneId,
+  status,
+  focusable = false,
+  priority = 'secondary',
+} = Astro.props;
 ---
 
-<section class="bg-surface-container-lowest min-w-0" data-pane>
-  <PaneHeader level={level} title={title} />
-  <div class="p-(--pane-padding)">
+<section
+  aria-labelledby={paneId ? `pane-${paneId}-title` : undefined}
+  class="bg-surface-container-lowest flex min-w-0 flex-col"
+  data-pane={paneId ?? ''}
+  data-priority={priority}
+  id={paneId ? `pane-${paneId}` : undefined}
+>
+  <PaneHeader
+    focusable={focusable}
+    level={level}
+    paneId={paneId}
+    status={status}
+    title={title}
+  />
+  <div class="min-h-0 flex-1 p-(--pane-padding)" data-pane-content>
     <slot />
   </div>
 </section>
+
+<style>
+  section {
+    container-name: pane;
+    container-type: inline-size;
+  }
+</style>

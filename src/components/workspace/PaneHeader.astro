@@ -1,24 +1,83 @@
 ---
+import Icon from '../ui/Icon.astro';
+
 interface Props {
   title: string;
   level?: 2 | 3;
+  paneId?: string;
+  status?: string;
+  focusable?: boolean;
 }
 
-const { title, level = 2 } = Astro.props;
+const { title, level = 2, paneId, status, focusable = false } = Astro.props;
+const titleId = paneId ? `pane-${paneId}-title` : undefined;
 ---
 
 <header
-  class="border-outline bg-surface-container-high flex min-h-(--pane-header-height) items-center border-b px-3"
+  class="border-outline bg-surface-container-high flex min-h-(--pane-header-height) items-stretch justify-between border-b"
 >
+  <div class="pane-heading flex min-w-0 items-center gap-3 px-3">
+    {
+      level === 2 ? (
+        <h2
+          class="text-on-surface font-interface m-0 truncate text-[length:var(--font-size-label-md)] leading-(--line-height-label) font-semibold tracking-(--letter-spacing-label) uppercase"
+          id={titleId}
+        >
+          {title}
+        </h2>
+      ) : (
+        <h3
+          class="text-on-surface font-interface m-0 truncate text-[length:var(--font-size-label-md)] leading-(--line-height-label) font-semibold tracking-(--letter-spacing-label) uppercase"
+          id={titleId}
+        >
+          {title}
+        </h3>
+      )
+    }
+    {
+      status && (
+        <span class="pane-status text-on-surface-variant font-interface text-[0.6875rem] tracking-wide">
+          {status}
+        </span>
+      )
+    }
+  </div>
   {
-    level === 2 ? (
-      <h2 class="text-on-surface font-interface m-0 text-[length:var(--font-size-label-md)] leading-(--line-height-label) font-semibold tracking-(--letter-spacing-label) uppercase">
-        {title}
-      </h2>
-    ) : (
-      <h3 class="text-on-surface font-interface m-0 text-[length:var(--font-size-label-md)] leading-(--line-height-label) font-semibold tracking-(--letter-spacing-label) uppercase">
-        {title}
-      </h3>
+    focusable && paneId && (
+      <button
+        aria-controls={`pane-${paneId}`}
+        aria-label={`Focus ${title} pane`}
+        aria-pressed="false"
+        class="pane-focus border-outline text-on-surface hover:bg-primary-container font-interface hidden min-h-11 items-center gap-2 border-l px-3 text-[0.6875rem] font-semibold uppercase"
+        data-pane-focus={paneId}
+        hidden
+        type="button"
+      >
+        <Icon name="maximize" size={14} />
+        <span data-focus-label>Focus</span>
+      </button>
     )
   }
 </header>
+
+<style>
+  .pane-status {
+    display: none;
+  }
+
+  @container pane (min-width: 34rem) {
+    .pane-status {
+      display: inline;
+    }
+  }
+
+  @container pane (max-width: 24rem) {
+    .pane-focus {
+      padding-inline: var(--spacing-3);
+    }
+
+    .pane-focus span {
+      display: none;
+    }
+  }
+</style>

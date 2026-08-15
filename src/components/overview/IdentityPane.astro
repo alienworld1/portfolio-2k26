@@ -1,0 +1,72 @@
+---
+import { profile } from '../../data/site';
+import Icon from '../ui/Icon.astro';
+import Pane from '../workspace/Pane.astro';
+---
+
+<Pane
+  focusable
+  paneId="identity"
+  priority="primary"
+  status="active profile"
+  title="Identity"
+>
+  <div class="flex h-full flex-col justify-between gap-8">
+    <div>
+      <p
+        class="text-primary font-interface mt-0 mb-4 text-xs font-semibold tracking-(--letter-spacing-label) uppercase"
+      >
+        Security operations portfolio
+      </p>
+      <p
+        class="identity-name text-on-surface font-interface m-0 max-w-4xl text-[length:var(--font-size-display)] leading-(--line-height-display) font-bold tracking-(--letter-spacing-display)"
+      >
+        {profile.name}
+      </p>
+      <p
+        class="identity-role text-on-surface font-interface mt-4 mb-0 text-[length:var(--font-size-headline-md)] leading-(--line-height-headline-md) font-semibold tracking-(--letter-spacing-headline-md)"
+      >
+        {profile.role}
+      </p>
+      <p
+        class="text-on-surface-variant mt-6 mb-0 max-w-(--compact-prose-max) text-[length:var(--font-size-body-lg)]"
+      >
+        {profile.summary}
+      </p>
+    </div>
+
+    <div class="identity-actions flex flex-wrap gap-3">
+      <a
+        class="border-primary bg-primary text-on-primary visited:text-on-primary hover:bg-primary-hover active:bg-primary-active font-interface inline-flex min-h-11 items-center gap-2 border px-4 text-xs font-semibold uppercase no-underline active:translate-y-px"
+        href="/work/"
+      >
+        Inspect selected work
+        <Icon name="arrowRight" size={16} />
+      </a>
+      <a
+        class="border-outline text-on-surface visited:text-on-surface hover:bg-primary-container font-interface inline-flex min-h-11 items-center gap-2 border px-4 text-xs font-semibold uppercase no-underline active:translate-y-px"
+        href={`mailto:${profile.email}`}
+      >
+        <Icon name="mail" size={16} />
+        Get in touch
+      </a>
+    </div>
+  </div>
+</Pane>
+
+<style>
+  @container pane (max-width: 33.999rem) {
+    .identity-name {
+      font-size: clamp(1.75rem, 10cqi, 2.75rem);
+    }
+
+    .identity-role {
+      font-size: var(--font-size-headline-sm);
+    }
+
+    .identity-actions > a {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

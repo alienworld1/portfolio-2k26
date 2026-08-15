@@ -49,7 +49,8 @@ export const profile: ProfileData = {
   role: 'Cybersecurity Analyst',
   location: 'Chennai, India',
   email: 'a.b.aditya.0101@gmail.com',
-  summary: 'I’m a cybersecurity student with a background in software development. I’m building practical experience in security monitoring, digital forensics, networking, and GRC. I enjoy understanding how systems work, finding where they fail, and learning how to protect them.',
+  summary:
+    'I’m a cybersecurity student with a background in software development. I’m building practical experience in security monitoring, digital forensics, networking, and GRC. I enjoy understanding how systems work, finding where they fail, and learning how to protect them.',
   socialLinks: [],
 };
 
