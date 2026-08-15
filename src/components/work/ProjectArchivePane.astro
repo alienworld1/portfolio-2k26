@@ -1,0 +1,87 @@
+---
+import type { GitHubProject } from '../../data/github-projects';
+import Pane from '../workspace/Pane.astro';
+import ProjectExplorer from './ProjectExplorer.astro';
+import ProjectPagination from './ProjectPagination.astro';
+import RepositoryRow from './RepositoryRow.astro';
+
+interface Props {
+  projects: readonly GitHubProject[];
+  languages: readonly string[];
+}
+
+const { projects, languages } = Astro.props;
+---
+
+<Pane
+  flush
+  paneId="repository-archive"
+  status={`${projects.length} curated repositories`}
+  title="repositories/"
+>
+  <div class="archive-grid bg-surface-container-low grid min-w-0">
+    <ProjectExplorer languages={languages} />
+
+    <section
+      aria-labelledby="repository-results-title"
+      class="bg-surface-container-lowest min-w-0"
+      data-project-buffer
+    >
+      <header
+        class="border-outline bg-inverse-surface text-inverse-on-surface flex min-h-10 items-center justify-between gap-4 border-b px-3"
+      >
+        <h3
+          class="font-interface m-0 truncate text-xs font-semibold"
+          id="repository-results-title"
+          tabindex="-1"
+        >
+          repository-index.buf
+        </h3>
+        <p
+          class="font-interface m-0 shrink-0 text-[0.6875rem]"
+          data-project-range
+        >
+          {projects.length} repositories
+        </p>
+      </header>
+
+      <p aria-live="polite" class="sr-only" data-project-announcement></p>
+
+      <ol class="bg-outline m-0 grid list-none gap-px p-0" data-project-list>
+        {
+          projects.map((project, index) => (
+            <RepositoryRow project={project} index={index + 1} />
+          ))
+        }
+      </ol>
+
+      <div
+        class="bg-surface-container-lowest p-8 text-center"
+        data-project-empty
+        hidden
+      >
+        <p class="text-on-surface font-interface m-0 font-semibold">
+          No repositories match this view.
+        </p>
+        <p class="text-on-surface-variant mt-2 mb-0 text-sm">
+          Try clearing the search or choosing a different filter.
+        </p>
+      </div>
+
+      <ProjectPagination />
+    </section>
+  </div>
+</Pane>
+
+<style>
+  .archive-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @media (min-width: 64rem) {
+    .archive-grid {
+      grid-template-columns: minmax(15rem, 3fr) minmax(0, 9fr);
+      align-items: start;
+    }
+  }
+</style>

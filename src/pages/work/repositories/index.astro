@@ -1,0 +1,38 @@
+---
+import ProjectArchivePane from '../../../components/work/ProjectArchivePane.astro';
+import WorkRouteWorkspace from '../../../components/work/WorkRouteWorkspace.astro';
+import {
+  curateGitHubProjects,
+  loadGitHubProjectSnapshot,
+} from '../../../data/github-projects';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const snapshot = await loadGitHubProjectSnapshot(import.meta.env.GITHUB_TOKEN);
+const { archive } = curateGitHubProjects(snapshot);
+const languages = Array.from(
+  new Set(archive.flatMap(({ primaryLanguage }) => primaryLanguage ?? [])),
+).sort((left, right) => left.localeCompare(right));
+---
+
+<BaseLayout
+  description="A searchable and filterable archive of public GitHub repositories."
+  title="Repository Archive"
+>
+  <h1 class="sr-only">GitHub repository archive</h1>
+  <WorkRouteWorkspace
+    active="repositories"
+    fetchedAt={snapshot.fetchedAt}
+    projectCount={archive.length}
+  >
+    <div data-project-workspace>
+      <ProjectArchivePane languages={languages} projects={archive} />
+    </div>
+  </WorkRouteWorkspace>
+
+  <script>
+    import { initializeProjectBrowsers } from '../../../motion/project-browser';
+
+    const cleanup = initializeProjectBrowsers();
+    document.addEventListener('astro:before-swap', cleanup, { once: true });
+  </script>
+</BaseLayout>

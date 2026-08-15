@@ -1,0 +1,26 @@
+---
+import FeaturedProjectsPane from '../../../components/work/FeaturedProjectsPane.astro';
+import WorkRouteWorkspace from '../../../components/work/WorkRouteWorkspace.astro';
+import {
+  curateGitHubProjects,
+  loadGitHubProjectSnapshot,
+} from '../../../data/github-projects';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const snapshot = await loadGitHubProjectSnapshot(import.meta.env.GITHUB_TOKEN);
+const { featured } = curateGitHubProjects(snapshot);
+---
+
+<BaseLayout
+  description="Pinned GitHub projects spanning security tooling and software engineering."
+  title="Pinned Work"
+>
+  <h1 class="sr-only">Pinned GitHub projects</h1>
+  <WorkRouteWorkspace
+    active="pinned"
+    fetchedAt={snapshot.fetchedAt}
+    projectCount={featured.length}
+  >
+    <FeaturedProjectsPane projects={featured} />
+  </WorkRouteWorkspace>
+</BaseLayout>

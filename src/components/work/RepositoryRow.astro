@@ -1,0 +1,81 @@
+---
+import type { GitHubProject } from '../../data/github-projects';
+import { formatProjectDate } from '../../data/github-projects';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  project: GitHubProject;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+---
+
+<li
+  class="bg-surface-container-lowest project-row"
+  data-description={project.description ?? ''}
+  data-has-website={String(project.websiteUrl !== null)}
+  data-language={project.primaryLanguage ?? ''}
+  data-name={project.name}
+  data-project-item
+  data-updated-at={project.updatedAt}
+>
+  <article class="grid min-w-0 grid-cols-[2.5rem_minmax(0,1fr)]">
+    <div
+      class="border-outline-variant text-on-surface-variant font-interface border-r pt-4 text-center text-[0.6875rem] select-none"
+      aria-hidden="true"
+    >
+      {String(index).padStart(2, '0')}
+    </div>
+    <div class="min-w-0 p-4 sm:p-5">
+      <div class="flex flex-wrap items-start justify-between gap-3">
+        <h3
+          class="text-on-surface font-interface m-0 min-w-0 text-base font-bold break-words"
+        >
+          {project.name}
+        </h3>
+        <span
+          class="border-outline-variant text-on-surface-variant font-interface shrink-0 border px-2 py-0.5 text-[0.6875rem]"
+        >
+          {project.primaryLanguage ?? 'Language not detected'}
+        </span>
+      </div>
+      <p class="text-on-surface-variant mt-2 mb-0 max-w-(--prose-max) text-sm">
+        {project.description ?? 'No description provided on GitHub.'}
+      </p>
+      <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+        <p class="text-on-surface-variant font-interface m-0 text-[0.6875rem]">
+          updated <time datetime={project.updatedAt}
+            >{formatProjectDate(project.updatedAt)}</time
+          >
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <a
+            aria-label={`Open ${project.name} repository on GitHub in a new tab`}
+            class="text-link visited:text-link-visited font-interface inline-flex min-h-11 items-center gap-1.5 text-xs font-semibold underline underline-offset-4"
+            href={project.repositoryUrl}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Repository
+            <Icon name="external" size={13} />
+          </a>
+          {
+            project.websiteUrl && (
+              <a
+                aria-label={`Open ${project.name} website in a new tab`}
+                class="text-link visited:text-link-visited font-interface inline-flex min-h-11 items-center gap-1.5 text-xs font-semibold underline underline-offset-4"
+                href={project.websiteUrl}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Website
+                <Icon name="external" size={13} />
+              </a>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </article>
+</li>

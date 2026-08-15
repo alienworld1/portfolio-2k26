@@ -1,0 +1,32 @@
+---
+import Icon from '../ui/Icon.astro';
+---
+
+<nav
+  aria-label="Repository pages"
+  class="border-outline bg-surface-container-high flex min-h-12 flex-wrap items-center justify-between gap-2 border-t px-3"
+  data-project-pagination
+  hidden
+>
+  <button
+    class="text-on-surface hover:bg-primary-container font-interface inline-flex min-h-11 items-center gap-1 px-2 text-xs font-semibold disabled:cursor-not-allowed disabled:opacity-40"
+    data-project-previous
+    type="button"
+  >
+    <Icon name="chevronLeft" size={15} />
+    Previous
+  </button>
+  <div
+    class="font-interface desktop:order-none desktop:w-auto order-3 flex w-full flex-wrap justify-center gap-1"
+    data-project-pages
+  >
+  </div>
+  <button
+    class="text-on-surface hover:bg-primary-container font-interface inline-flex min-h-11 items-center gap-1 px-2 text-xs font-semibold disabled:cursor-not-allowed disabled:opacity-40"
+    data-project-next
+    type="button"
+  >
+    Next
+    <Icon name="chevronRight" size={15} />
+  </button>
+</nav>

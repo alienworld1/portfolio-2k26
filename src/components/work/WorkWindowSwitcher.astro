@@ -1,0 +1,50 @@
+---
+interface Props {
+  active: 'pinned' | 'repositories';
+}
+
+const { active } = Astro.props;
+const windows = [
+  { id: 'pinned', label: 'pinned', href: '/work/pinned/' },
+  { id: 'repositories', label: 'repositories', href: '/work/repositories/' },
+] as const;
+---
+
+<nav
+  aria-label="Work views"
+  class="bg-inverse-surface text-inverse-on-surface flex min-h-11 items-stretch justify-between gap-3 overflow-x-auto"
+  data-work-window-switcher
+>
+  <ul class="m-0 flex list-none items-stretch p-0">
+    {
+      windows.map((window, index) => {
+        const current = active === window.id;
+
+        return (
+          <li class="flex">
+            <a
+              aria-current={current ? 'page' : undefined}
+              class:list={[
+                'visited:text-inverse-on-surface font-interface flex min-h-11 items-center gap-2 px-4 text-xs font-semibold no-underline',
+                current
+                  ? 'bg-primary text-on-primary visited:text-on-primary'
+                  : 'text-inverse-on-surface hover:bg-secondary',
+              ]}
+              data-work-window-link={window.id}
+              href={window.href}
+            >
+              <span aria-hidden="true">{index}:</span>
+              <span>{window.label}</span>
+              {current && <span aria-hidden="true">*</span>}
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+  <p
+    class="text-outline-variant font-interface m-0 hidden shrink-0 items-center px-3 text-[0.6875rem] sm:flex"
+  >
+    session: work
+  </p>
+</nav>

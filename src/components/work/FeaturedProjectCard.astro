@@ -1,0 +1,99 @@
+---
+import type { GitHubProject } from '../../data/github-projects';
+import { formatProjectDate } from '../../data/github-projects';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  project: GitHubProject;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+---
+
+<article
+  class="bg-surface-container-lowest flex min-h-64 flex-col"
+  data-featured-project
+>
+  <header
+    class="border-outline-variant bg-surface-container-low flex min-h-9 items-center justify-between gap-3 border-b px-3"
+  >
+    <p
+      class="text-on-surface font-interface m-0 min-w-0 truncate text-xs font-semibold"
+    >
+      <span class="text-primary" aria-hidden="true"
+        >[{String(index).padStart(2, '0')}]</span
+      >
+      <span aria-hidden="true">&nbsp;</span>
+      {project.name}.repo
+    </p>
+    <span
+      class="text-on-surface-variant font-interface shrink-0 text-[0.6875rem] uppercase"
+    >
+      pinned
+    </span>
+  </header>
+
+  <div class="flex flex-1 flex-col justify-between gap-6 p-4 sm:p-5">
+    <div>
+      <h3
+        class="text-on-surface font-interface m-0 text-[length:var(--font-size-headline-md)] leading-(--line-height-headline-md) font-bold tracking-(--letter-spacing-headline-md)"
+      >
+        {project.name}
+      </h3>
+      <p class="text-on-surface-variant mt-3 mb-0 text-sm">
+        {project.description ?? 'No description provided on GitHub.'}
+      </p>
+    </div>
+
+    <div>
+      <dl
+        class="border-outline-variant font-interface m-0 grid grid-cols-2 gap-x-4 gap-y-2 border-t pt-3 text-xs"
+      >
+        <div>
+          <dt class="text-on-surface-variant">language</dt>
+          <dd class="text-on-surface m-0 mt-0.5 font-semibold">
+            {project.primaryLanguage ?? 'Language not detected'}
+          </dd>
+        </div>
+        <div>
+          <dt class="text-on-surface-variant">updated</dt>
+          <dd class="text-on-surface m-0 mt-0.5 font-semibold">
+            <time datetime={project.updatedAt}
+              >{formatProjectDate(project.updatedAt)}</time
+            >
+          </dd>
+        </div>
+      </dl>
+
+      <div class="mt-4 flex flex-wrap gap-2">
+        <a
+          aria-label={`Open ${project.name} repository on GitHub in a new tab`}
+          class="border-outline text-on-surface visited:text-on-surface hover:bg-primary-container font-interface inline-flex min-h-11 items-center gap-2 border px-3 text-xs font-semibold no-underline"
+          href={project.repositoryUrl}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <Icon name="github" size={15} />
+          Repository
+          <Icon name="external" size={13} />
+        </a>
+        {
+          project.websiteUrl && (
+            <a
+              aria-label={`Open ${project.name} website in a new tab`}
+              class="border-outline text-on-surface visited:text-on-surface hover:bg-primary-container font-interface inline-flex min-h-11 items-center gap-2 border px-3 text-xs font-semibold no-underline"
+              href={project.websiteUrl}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <Icon name="globe" size={15} />
+              Website
+              <Icon name="external" size={13} />
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</article>

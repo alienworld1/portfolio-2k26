@@ -1,0 +1,153 @@
+---
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  languages: readonly string[];
+}
+
+const { languages } = Astro.props;
+---
+
+<aside
+  aria-label="Repository filters"
+  class="bg-surface-container-low border-outline desktop:border-r desktop:border-b-0 min-w-0 border-b"
+>
+  <details class="project-explorer" data-project-filter-details open>
+    <summary
+      class="border-outline font-interface desktop:cursor-default flex min-h-11 cursor-pointer list-none items-center gap-2 border-b px-4 text-xs font-semibold uppercase"
+    >
+      <Icon name="sliders" size={15} />
+      Explorer filters
+    </summary>
+
+    <div class="p-4" data-project-controls hidden>
+      <form
+        action="/work/"
+        class="space-y-4"
+        data-project-filter-form
+        method="get"
+      >
+        <div>
+          <label
+            class="text-on-surface font-interface mb-1.5 block text-xs font-semibold"
+            for="project-search"
+          >
+            Search
+          </label>
+          <div class="relative">
+            <Icon
+              class="text-on-surface-variant pointer-events-none absolute top-1/2 left-3 -translate-y-1/2"
+              name="search"
+              size={15}
+            />
+            <input
+              class="border-outline bg-surface-container-lowest text-on-surface font-interface min-h-11 w-full border py-2 pr-3 pl-9 text-sm"
+              data-project-search
+              id="project-search"
+              name="q"
+              placeholder="Name or description"
+              type="search"
+            />
+          </div>
+          <p
+            class="text-on-surface-variant font-interface mt-1 mb-0 text-[0.6875rem]"
+          >
+            Press <kbd class="border-outline border px-1">/</kbd> to focus
+          </p>
+        </div>
+
+        <div>
+          <label
+            class="text-on-surface font-interface mb-1.5 block text-xs font-semibold"
+            for="project-language"
+          >
+            Primary language
+          </label>
+          <select
+            class="border-outline bg-surface-container-lowest text-on-surface font-interface min-h-11 w-full border px-3 text-sm"
+            data-project-language
+            id="project-language"
+            name="language"
+          >
+            <option value="all">All languages</option>
+            {
+              languages.map((language) => (
+                <option value={language}>{language}</option>
+              ))
+            }
+          </select>
+        </div>
+
+        <div>
+          <label
+            class="text-on-surface font-interface mb-1.5 block text-xs font-semibold"
+            for="project-site"
+          >
+            Website
+          </label>
+          <select
+            class="border-outline bg-surface-container-lowest text-on-surface font-interface min-h-11 w-full border px-3 text-sm"
+            data-project-site
+            id="project-site"
+            name="site"
+          >
+            <option value="all">All repositories</option>
+            <option value="with">With website</option>
+            <option value="without">Without website</option>
+          </select>
+        </div>
+
+        <div>
+          <label
+            class="text-on-surface font-interface mb-1.5 block text-xs font-semibold"
+            for="project-sort"
+          >
+            Sort
+          </label>
+          <select
+            class="border-outline bg-surface-container-lowest text-on-surface font-interface min-h-11 w-full border px-3 text-sm"
+            data-project-sort
+            id="project-sort"
+            name="sort"
+          >
+            <option value="updated">Recently updated</option>
+            <option value="name">Repository name</option>
+          </select>
+        </div>
+
+        <button
+          class="bg-primary text-on-primary hover:bg-primary-hover active:bg-primary-active font-interface min-h-11 w-full px-4 text-xs font-semibold uppercase"
+          type="submit"
+        >
+          Apply filters
+        </button>
+        <a
+          class="border-outline text-on-surface visited:text-on-surface hover:bg-primary-container font-interface flex min-h-11 w-full items-center justify-center gap-2 border px-4 text-xs font-semibold uppercase no-underline"
+          data-project-reset
+          href="/work/"
+        >
+          <Icon name="reset" size={15} />
+          Reset view
+        </a>
+      </form>
+    </div>
+  </details>
+</aside>
+
+<style>
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  @media (min-width: 64rem) {
+    aside {
+      position: sticky;
+      top: calc(var(--workspace-bar-height) + var(--spacing-4));
+      align-self: start;
+    }
+
+    summary {
+      cursor: default;
+    }
+  }
+</style>

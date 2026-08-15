@@ -1,0 +1,38 @@
+---
+import type { GitHubProject } from '../../data/github-projects';
+import Pane from '../workspace/Pane.astro';
+import FeaturedProjectCard from './FeaturedProjectCard.astro';
+
+interface Props {
+  projects: readonly GitHubProject[];
+}
+
+const { projects } = Astro.props;
+---
+
+<Pane
+  flush
+  paneId="pinned-projects"
+  status={`${projects.length} GitHub pins`}
+  title="pinned/"
+>
+  <div class="featured-grid bg-outline grid gap-px">
+    {
+      projects.map((project, index) => (
+        <FeaturedProjectCard project={project} index={index + 1} />
+      ))
+    }
+  </div>
+</Pane>
+
+<style>
+  .featured-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @media (min-width: 48rem) {
+    .featured-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

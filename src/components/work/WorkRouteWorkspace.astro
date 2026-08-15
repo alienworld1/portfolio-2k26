@@ -1,0 +1,25 @@
+---
+import { formatProjectDate } from '../../data/github-projects';
+import WorkspaceShell from '../workspace/WorkspaceShell.astro';
+import WorkspaceStatus from '../workspace/WorkspaceStatus.astro';
+import WorkWindowSwitcher from './WorkWindowSwitcher.astro';
+
+interface Props {
+  active: 'pinned' | 'repositories';
+  fetchedAt: string;
+  projectCount: number;
+}
+
+const { active, fetchedAt, projectCount } = Astro.props;
+---
+
+<WorkspaceShell>
+  <div data-work-route-workspace={active}>
+    <WorkWindowSwitcher active={active} />
+    <slot />
+    <WorkspaceStatus
+      label={`work.${active} · ${projectCount} projects · snapshot ${formatProjectDate(fetchedAt)}`}
+      paneCount={1}
+    />
+  </div>
+</WorkspaceShell>
